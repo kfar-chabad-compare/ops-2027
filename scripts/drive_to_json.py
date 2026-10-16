@@ -9,25 +9,19 @@ import openpyxl
 FILE_ID = os.environ.get('DRIVE_FILE_ID', '1UuO5FEUyUfGIfDMoEuqFwfb7BAwmEzGV')
 SHEETS = ['מוצרים', 'מלאי ישן', 'Sheet1']  # 'מידע' intentionally excluded (as in the manual export)
 OUT = 'data.json'
-PRIVACY_SCRUB = {'יוסי'}        # his name never goes public
-EMPTY_COLS = {'מוצרים': {'אחראי הפקה', 'אחראי ייצור'}}  # internal owner columns: kept off the public site (empty today)
+# Owner decision 2026-10-16: publish the sheet as-is, including his name in owner columns.
 
 def conv(v):
     if v is None: return ''
     if isinstance(v, float) and v == int(v): return int(v)
-    if isinstance(v, str) and v.strip() in PRIVACY_SCRUB: return ''
     return v
 
-def convert_sheet(ws, drop_headers):
+def convert_sheet(ws):
     rows = [[conv(c) for c in r] for r in ws.iter_rows(values_only=True)]
     while rows and all(c == '' for c in rows[-1]): rows.pop()
     if not rows: return []
     ncol = max((max((i+1 for i, c in enumerate(r) if c != ''), default=0)) for r in rows)
     rows = [list(r[:ncol]) + ['']*(ncol-len(r)) for r in rows]
-    if drop_headers:
-        hdr = [str(h) for h in rows[0]]
-        drop = {i for i, h in enumerate(hdr) if h in drop_headers}
-        rows = [rows[0]] + [['' if i in drop else c for i, c in enumerate(r)] for r in rows[1:]]
     return rows
 
 def main():
@@ -54,7 +48,7 @@ def main():
         out = json.load(open(OUT, encoding='utf-8'))
     tabs = []
     for name in SHEETS:
-        tabs.append({'name': name, 'rows': convert_sheet(wb[name], EMPTY_COLS.get(name, set()))})
+        tabs.append({'name': name, 'rows': convert_sheet(wb[name])})
 
     # sanity: don't publish a broken conversion
     if not (100 <= len(tabs[0]['rows']) <= 400): 
