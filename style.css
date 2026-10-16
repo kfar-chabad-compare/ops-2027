@@ -34,3 +34,18 @@ table.upd{width:100%;font-size:.9rem}
 tr.dup td{background:#fde4e1}
 tr.simr td{background:#fdf6e0}
 .dupnote{font-size:.85rem;color:#333;background:#fff7d6;border:1px solid #c9a400;padding:6px}
+
+/* toolbar additions: columns, freeze, row numbers, filters, drive */
+.bar2{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:8px 0;position:relative}
+.drv{background:#0b6b3a;border-color:#0b6b3a;color:#fff;text-decoration:none;padding:6px 10px;border-radius:4px;display:inline-block}
+.chip{background:#eee;color:#111;border:1px solid #888;border-radius:14px;padding:4px 12px;cursor:pointer}
+.chip.on{background:#40512f;color:#fff;border-color:#40512f}
+.ck{display:inline-flex;align-items:center;gap:2px;margin-left:10px;white-space:nowrap}
+.colpanel{position:absolute;top:100%;right:0;z-index:40;background:#fdfbf5;border:2px solid #40512f;border-radius:6px;padding:10px;max-height:60vh;overflow:auto;min-width:220px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.colpanel .ck{display:flex;padding:2px 0}
+th.stk,td.stk{position:sticky;z-index:5}
+th.stk{z-index:8}
+td.stk{background:#f6f1e5}
+tbody tr:nth-child(even) td.stk{background:#f6f6f6}
+.rnum{background:#efeadf;color:#555;font-size:.8rem;white-space:nowrap}
+td.rnum{text-align:center}
