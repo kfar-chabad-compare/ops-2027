@@ -17,3 +17,20 @@ tbody tr:nth-child(even){background:#f6f6f6}
 .sr{position:absolute;left:-9999px}
 .a11y{display:none}.a11y:target{display:block}
 footer{border-top:1px solid #ccc;font-size:.85rem;color:#333}
+
+/* product slice additions */
+body{background:#f6f1e5}
+.btn{display:inline-block;background:#0645ad;color:#fff;border-radius:4px;padding:6px 10px;text-decoration:none;white-space:nowrap}
+.btn2{background:#40512f;color:#fff;border-color:#40512f;white-space:nowrap}
+.thumb{max-width:56px;max-height:56px;border:1px solid #888;border-radius:4px;cursor:pointer;background:#fff}
+.cnt{font-weight:bold;white-space:nowrap}
+.ovl{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:16px}
+.ovl img{max-width:92vw;max-height:82vh;background:#fff;border:4px solid #fff}
+.ovlx{position:absolute;top:12px;left:12px}
+.panel{background:#fdfbf5;color:#111;max-width:640px;width:100%;max-height:82vh;overflow:auto;padding:16px;border:2px solid #40512f;border-radius:6px;position:relative}
+.panel h2{margin:0 0 10px;font-size:1.1rem;padding-left:90px}
+table.upd{width:100%;font-size:.9rem}
+.upd th{background:#e8eefc}
+tr.dup td{background:#fde4e1}
+tr.simr td{background:#fdf6e0}
+.dupnote{font-size:.85rem;color:#333;background:#fff7d6;border:1px solid #c9a400;padding:6px}
