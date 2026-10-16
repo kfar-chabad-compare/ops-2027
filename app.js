@@ -76,7 +76,7 @@ function render(){
       var c4=document.createElement('td');var ub=document.createElement('button');ub.className='btn2';ub.textContent='עדכונים';
       ub.addEventListener('click',function(){showUpdates(sku,name)});c4.appendChild(ub);t.appendChild(c4);
     }
-    head.forEach(function(_,i){var c=document.createElement('td');c.textContent=r[i]==null?'':r[i];t.appendChild(c)});
+    head.forEach(function(_,i){var c=document.createElement('td');var v=r[i]==null?'':r[i];if(prod&&i===18&&(v===''||v==='#N/A'))v='0';c.textContent=v;t.appendChild(c)});
     frag.appendChild(t)});
   tb.appendChild(frag);
   $('count').textContent=body.length+' שורות';
