@@ -1,0 +1,35 @@
+name: pull-drive
+# Auto-pull the Drive workbook into data.json. One direction only: Drive -> site.
+# Free: public repo minutes are unlimited; a few Drive downloads/day are far below free quotas.
+on:
+  schedule:
+    - cron: '23 */6 * * *'   # every 6 hours
+  workflow_dispatch: {}       # manual run button in the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install google-api-python-client google-auth openpyxl
+      - name: Pull workbook and rebuild data.json
+        env:
+          DRIVE_SA_KEY: ${{ secrets.DRIVE_SA_KEY }}
+          DRIVE_FILE_ID: 1UuO5FEUyUfGIfDMoEuqFwfb7BAwmEzGV
+        run: python scripts/drive_to_json.py
+      - name: Commit if changed
+        run: |
+          if git diff --quiet data.json; then
+            echo "no change"; exit 0
+          fi
+          git config user.name "ops-2027-bot"
+          git config user.email "ops-2027-bot@users.noreply.github.com"
+          git add data.json
+          git commit -m "Auto-pull from Drive $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push
