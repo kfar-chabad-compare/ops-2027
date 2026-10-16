@@ -6,6 +6,7 @@ var data=null,cur=null,sortCol=-1,sortAsc=true;
 var PRODUCTS_TAB=0;
 function isProducts(){return data && data.tabs[cur] && data.tabs[cur].name==='מוצרים'}
 function updatesFor(sku){var u=data.updates||{};return u[sku]||[]}
+function imgUrl(sku){var u=(data.imageUrls||{})[sku];return u||('images/'+encodeURIComponent(sku)+'.jpg')}
 function hasImage(sku){return (data.images||[]).indexOf(sku)>-1}
 function esc(s){return String(s==null?'':s)}
 function closeOverlays(){var o=$('ovl');if(o)o.remove()}
@@ -13,7 +14,7 @@ function showImage(sku,name){
   closeOverlays();
   var o=document.createElement('div');o.id='ovl';o.className='ovl';o.setAttribute('role','dialog');o.setAttribute('aria-label',name);
   var b=document.createElement('button');b.className='ovlx';b.textContent='סגור';b.addEventListener('click',closeOverlays);
-  var im=document.createElement('img');im.src='images/'+encodeURIComponent(sku)+'.jpg';im.alt=name;
+  var im=document.createElement('img');im.src=imgUrl(sku);im.alt=name;
   o.appendChild(b);o.appendChild(im);
   o.addEventListener('click',function(e){if(e.target===o)closeOverlays()});
   document.body.appendChild(o);b.focus();
@@ -70,7 +71,7 @@ function render(){
       t.appendChild(c1);
       var c2=document.createElement('td');c2.className='cnt';c2.textContent=(cnt===''||cnt==='#N/A')?'0':cnt;t.appendChild(c2);
       var c3=document.createElement('td');
-      if(hasImage(sku)){var im=document.createElement('img');im.className='thumb';im.src='images/'+encodeURIComponent(sku)+'.jpg';im.alt='תמונת '+name;im.loading='lazy';
+      if(hasImage(sku)){var im=document.createElement('img');im.className='thumb';im.src=imgUrl(sku);im.alt='תמונת '+name;im.loading='lazy';
         im.addEventListener('click',function(){showImage(sku,name)});c3.appendChild(im)}
       t.appendChild(c3);
       var c4=document.createElement('td');var ub=document.createElement('button');ub.className='btn2';ub.textContent='עדכונים';
